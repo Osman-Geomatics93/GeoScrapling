@@ -65,10 +65,9 @@ class GeoExporter:
             "csv": self.to_csv,
         }
 
-        handler = dispatch.get(fmt)
-        if handler is None:
+        if fmt not in dispatch:
             raise ValueError(f"Unsupported export format: {fmt!r}")
-        return handler(transformed, str(out))
+        return dispatch[fmt](transformed, str(out))
 
     # ── Format-specific exporters ───────────────────────────────────────
 

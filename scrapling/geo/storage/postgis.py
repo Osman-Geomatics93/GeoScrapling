@@ -28,7 +28,7 @@ class PostGISStorage:
         self.schema = schema
 
     def _engine(self):
-        from sqlalchemy import create_engine
+        from sqlalchemy import create_engine  # type: ignore[import-untyped]
 
         return create_engine(self.connection_string)
 
