@@ -5,9 +5,12 @@
 </h1>
 
 <p align="center">
-    <img alt="Python 3.9+" src="https://img.shields.io/badge/python-3.9%2B-blue.svg">
-    <img alt="License BSD-3" src="https://img.shields.io/badge/license-BSD--3--Clause-green.svg">
-    <img alt="Tests 188 passed" src="https://img.shields.io/badge/tests-188%20passed-brightgreen.svg">
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml">
+        <img alt="Tests" src="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml/badge.svg"></a>
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/Osman-Geomatics93/GeoScrapling"></a>
+    <a href="https://pypi.org/project/scrapling/">
+        <img alt="Python versions" src="https://img.shields.io/pypi/pyversions/scrapling.svg"></a>
     <img alt="LOC 4500+" src="https://img.shields.io/badge/LOC-4%2C500%2B-informational.svg">
 </p>
 
@@ -24,6 +27,12 @@
     &middot;
     <a href="#architecture"><strong>Architecture</strong></a>
 </p>
+
+---
+
+## Why GeoScrapling?
+
+Geomatics and geoinformatics professionals routinely need to harvest spatial data from the web — whether it's scraping coordinate lists from government portals, pulling features from OGC services, or extracting geo-tagged metadata from HTML pages. Existing tools force you to glue together a web scraper, a coordinate parser, a CRS library, and a spatial exporter. GeoScrapling unifies all of this into a single pipeline: fetch a page, extract coordinates, transform them, validate geometries, and export to any spatial format — in a few lines of Python.
 
 ---
 
@@ -468,3 +477,7 @@ python -m pytest tests/geo/test_utils.py -v
 ## License
 
 BSD-3-Clause — same as the parent [Scrapling](https://github.com/D4Vinci/Scrapling) project.
+
+---
+
+<p align="center"><a href="../README.md">&larr; Back to main README</a></p>
