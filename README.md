@@ -46,6 +46,8 @@
     <a href="https://scrapling.readthedocs.io/en/latest/cli/overview/"><strong>CLI</strong></a>
     &middot;
     <a href="https://scrapling.readthedocs.io/en/latest/ai/mcp-server/"><strong>MCP</strong></a>
+    &middot;
+    <a href="docs/GEO_README.md"><strong>Geospatial</strong></a>
 </p>
 
 Scrapling is an adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl.
@@ -144,6 +146,15 @@ MySpider().start()
 - 🔌 **Familiar API**: Similar to Scrapy/BeautifulSoup with the same pseudo-elements used in Scrapy/Parsel.
 - 📘 **Complete Type Coverage**: Full type hints for excellent IDE support and code completion. The entire codebase is automatically scanned with **PyRight** and **MyPy** with each change.
 - 🔋 **Ready Docker image**: With each release, a Docker image containing all browsers is automatically built and pushed.
+
+### Geospatial Intelligence (GeoScrapling)
+- 🌍 **Coordinate Extraction**: Parse coordinates from text in DD, DMS, UTM, MGRS formats as well as HTML, KML, GeoJSON, and GML sources.
+- 📐 **CRS Engine**: Transform between 9,000+ EPSG coordinate reference systems with datum shifts and geoid height support.
+- 🌐 **OGC Services**: Query WFS, WMS, WCS, WMTS, and CSW geospatial web services directly.
+- 📦 **Multi-Format Export**: Export to GeoJSON, Shapefile, KML, GeoPackage, GeoTIFF, and more.
+- 🕷️ **GeoSpider Pipeline**: Scrape-to-spatial pipeline that extracts, transforms, and stores geospatial data in one pass.
+- 💾 **Spatial Storage**: Persist features to GeoPackage, PostGIS, and SpatiaLite databases.
+- ⚡ **10 CLI Commands**: Full `scrapling geo` command suite for coordinate extraction, CRS lookup, format conversion, and OGC queries.
 
 ## Getting Started
 
@@ -299,6 +310,20 @@ async with AsyncStealthySession(max_pages=2) as session:
     print(session.get_pool_stats())
 ```
 
+### Geospatial Scraping
+Extract coordinates from text, transform them, and export to spatial formats:
+```python
+from scrapling.geo import CoordinateExtractor, GeoExporter, GeoFeature
+
+extractor = CoordinateExtractor()
+points = extractor.extract_from_text("Summit: 27°59'17\"N 86°55'31\"E")
+
+features = [GeoFeature(geometry=pt.to_shapely(), properties={"src": "text"}) for pt in points]
+GeoExporter().export(features, "coords.geojson")
+```
+
+> For the full geospatial API — CRS transformations, OGC services, GeoSpider, spatial storage, and CLI commands — see [docs/GEO_README.md](docs/GEO_README.md).
+
 ## CLI & Interactive Shell
 
 Scrapling includes a powerful command-line interface:
@@ -376,9 +401,13 @@ This installation only includes the parser engine and its dependencies, without 
        ```bash
        pip install "scrapling[ai]"
        ```
-   - Install shell features (Web Scraping shell and the `extract` command): 
+   - Install shell features (Web Scraping shell and the `extract` command):
        ```bash
        pip install "scrapling[shell]"
+       ```
+   - Install geospatial features (coordinate extraction, CRS transformations, OGC services, spatial export):
+       ```bash
+       pip install "scrapling[geo]"
        ```
    - Install everything: 
        ```bash
