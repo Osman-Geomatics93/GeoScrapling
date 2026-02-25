@@ -1,20 +1,39 @@
-<h1 align="center">
-    GeoScrapling
-    <br>
-    <small>Geospatial Intelligence for Web Scraping</small>
-</h1>
+<div align="center">
 
-<p align="center">
-    <a href="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml">
-        <img alt="Tests" src="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml/badge.svg"></a>
+<h1>GeoScrapling</h1>
+<h3>Geospatial Intelligence for Web Scraping</h3>
+
+<p>
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/geo-tests.yml">
+        <img alt="Geo Tests" src="https://img.shields.io/github/actions/workflow/status/Osman-Geomatics93/GeoScrapling/geo-tests.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=Geo%20Tests"></a>
+    &nbsp;
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling">
+        <img alt="Code Quality" src="https://img.shields.io/badge/Code_Quality-A-brightgreen?style=for-the-badge&logo=codeclimate&logoColor=white"></a>
+    &nbsp;
     <a href="https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/LICENSE">
-        <img alt="License" src="https://img.shields.io/github/license/Osman-Geomatics93/GeoScrapling"></a>
+        <img alt="License" src="https://img.shields.io/github/license/Osman-Geomatics93/GeoScrapling?style=for-the-badge&logo=opensourceinitiative&logoColor=white"></a>
+    &nbsp;
     <a href="https://pypi.org/project/scrapling/">
-        <img alt="Python versions" src="https://img.shields.io/pypi/pyversions/scrapling.svg"></a>
-    <img alt="LOC 4500+" src="https://img.shields.io/badge/LOC-4%2C500%2B-informational.svg">
+        <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
 </p>
 
-<p align="center">
+<!-- Stats Bar -->
+<p>
+    <img alt="EPSG Codes" src="https://img.shields.io/badge/9,000+_EPSG_Codes-informational?style=flat-square&logo=openstreetmap&logoColor=white">
+    &nbsp;
+    <img alt="Export Formats" src="https://img.shields.io/badge/8_Export_Formats-informational?style=flat-square&logo=files&logoColor=white">
+    &nbsp;
+    <img alt="CLI Commands" src="https://img.shields.io/badge/10_CLI_Commands-informational?style=flat-square&logo=gnubash&logoColor=white">
+    &nbsp;
+    <img alt="Geo Tests" src="https://img.shields.io/badge/188_Geo_Tests-informational?style=flat-square&logo=pytest&logoColor=white">
+    &nbsp;
+    <img alt="LOC" src="https://img.shields.io/badge/4,500+_LOC-informational?style=flat-square&logo=codeclimate&logoColor=white">
+</p>
+
+<!-- Navigation -->
+<p>
+    <a href="#why-geoscrapling"><strong>Why GeoScrapling?</strong></a>
+    &middot;
     <a href="#installation"><strong>Installation</strong></a>
     &middot;
     <a href="#quick-start"><strong>Quick Start</strong></a>
@@ -23,20 +42,22 @@
     &middot;
     <a href="#cli-commands"><strong>CLI</strong></a>
     &middot;
-    <a href="#data-models"><strong>Data Models</strong></a>
-    &middot;
     <a href="#architecture"><strong>Architecture</strong></a>
 </p>
+
+</div>
 
 ---
 
 ## Why GeoScrapling?
 
-Geomatics and geoinformatics professionals routinely need to harvest spatial data from the web — whether it's scraping coordinate lists from government portals, pulling features from OGC services, or extracting geo-tagged metadata from HTML pages. Existing tools force you to glue together a web scraper, a coordinate parser, a CRS library, and a spatial exporter. GeoScrapling unifies all of this into a single pipeline: fetch a page, extract coordinates, transform them, validate geometries, and export to any spatial format — in a few lines of Python.
+> Geomatics and geoinformatics professionals routinely need to harvest spatial data from the web — whether it's scraping coordinate lists from government portals, pulling features from OGC services, or extracting geo-tagged metadata from HTML pages. Existing tools force you to glue together a web scraper, a coordinate parser, a CRS library, and a spatial exporter. **GeoScrapling unifies all of this into a single pipeline**: fetch a page, extract coordinates, transform them, validate geometries, and export to any spatial format — in a few lines of Python.
 
 ---
 
 **GeoScrapling** is a geospatial extension for the [Scrapling](https://github.com/D4Vinci/Scrapling) web-scraping framework. It adds coordinate extraction, CRS transformations, OGC web-service clients, multi-format export, spatial storage, and a geo-aware spider pipeline — giving geomatics, geoinformatics, and surveying professionals a single toolkit for harvesting, transforming, and storing spatial data from the web.
+
+---
 
 ## Installation
 
@@ -44,7 +65,10 @@ Geomatics and geoinformatics professionals routinely need to harvest spatial dat
 pip install scrapling[geo]
 ```
 
-This pulls in `pyproj`, `shapely`, `geopandas`, `fiona`, `rasterio`, `owslib`, `geojson`, `folium`, `fastkml`, `numpy`, and `click`.
+> [!NOTE]
+> This pulls in `pyproj`, `shapely`, `geopandas`, `fiona`, `rasterio`, `owslib`, `geojson`, `folium`, `fastkml`, `numpy`, and `click`.
+
+---
 
 ## Quick Start
 
@@ -93,6 +117,8 @@ exporter.export(features, "cities.kml")          # KML
 exporter.export(features, "cities.gpkg")         # GeoPackage
 ```
 
+---
+
 ## Key Features
 
 ### Coordinate Extraction
@@ -122,6 +148,8 @@ lat = extractor.parse_dms("""40°42'46"N""")
 lat, lon = extractor.parse_utm("18T 583960 4507523")
 lat, lon = extractor.parse_mgrs("18TWL8396007523")
 ```
+
+---
 
 ### CRS Engine
 
@@ -164,6 +192,8 @@ epsg = registry.resolve("Web Mercator")  # "EPSG:3857"
 results = registry.search("Swiss")    # [{name: "Swiss CH1903+", code: "EPSG:2056"}]
 ```
 
+---
+
 ### OGC Services
 
 A unified client for **WFS**, **WMS**, **WCS**, **WMTS**, and **CSW** services.
@@ -196,6 +226,8 @@ layers = wfs.list_layers()
 info = wfs.get_layer_info("parcels")
 ```
 
+---
+
 ### Multi-Format Export
 
 Export `GeoFeature` lists to any supported format. The format is auto-detected from the file extension.
@@ -227,6 +259,8 @@ exporter.to_csv(features, "output.csv", coord_columns=("lon", "lat"))
 # Convert to GeoDataFrame (no file output)
 gdf = exporter.to_geodataframe(features)
 ```
+
+---
 
 ### GeoSpider
 
@@ -262,6 +296,8 @@ SurveySpider().start()
 
 **Specialized spiders:** `OGCSpider`, `GeoportalSpider`, `SentinelSpider`, `CadastralSpider`.
 
+---
+
 ### Spatial Storage
 
 Persist features to spatial databases with automatic table creation and CRS management.
@@ -281,6 +317,8 @@ pg.store(features, table="parcels", srid=4326)
 sl = SpatiaLiteStorage("survey.db")
 sl.store(features, table="monuments")
 ```
+
+---
 
 ### Specialized Fetchers
 
@@ -304,6 +342,8 @@ gnss = GNSSFetcher()
 cadastral = CadastralFetcher()
 ```
 
+---
+
 ### Validators
 
 Validate coordinates, geometry topology, and spatial data quality.
@@ -324,6 +364,8 @@ fixed = gv.fix_topology(invalid_polygon)
 has_self_ix = gv.check_self_intersection(polygon)
 ccw = gv.check_winding_order(polygon)  # RFC 7946
 ```
+
+---
 
 ## CLI Commands
 
@@ -352,6 +394,8 @@ scrapling geo validate parcels.shp
 scrapling geo preview parcels.shp
 scrapling geo elevation 30.0444 31.2357
 ```
+
+---
 
 ## Data Models
 
@@ -384,7 +428,12 @@ bbox_utm = bbox.transform("EPSG:32636")
 
 Each model carries a `crs` field (default `EPSG:4326`) and supports `CoordinateQuality` metadata for tracking precision, accuracy, source, and confidence.
 
+---
+
 ## Architecture
+
+<details>
+<summary><strong>Module Structure</strong></summary>
 
 ```
 scrapling/geo/
@@ -437,7 +486,12 @@ scrapling/geo/
 
 **45 source files &middot; 4,500+ lines of code &middot; 8 test modules &middot; 188 tests**
 
-## Dependencies
+</details>
+
+---
+
+<details>
+<summary><strong>Dependency Details</strong></summary>
 
 The `geo` extra installs the following packages:
 
@@ -455,9 +509,14 @@ The `geo` extra installs the following packages:
 | `numpy` | &ge; 1.24.0 | Numerical arrays for raster operations |
 | `click` | &ge; 8.3.0 | CLI command framework |
 
+</details>
+
+---
+
 ## Testing
 
-Run the full geo test suite:
+> [!TIP]
+> Run individual test modules to speed up development iteration. The full suite covers models, CRS, parsers, validators, exporters, storage, integration, and utilities.
 
 ```bash
 # All 188 geo tests
@@ -474,10 +533,14 @@ python -m pytest tests/geo/test_integration.py -v
 python -m pytest tests/geo/test_utils.py -v
 ```
 
+---
+
 ## License
 
 BSD-3-Clause — same as the parent [Scrapling](https://github.com/D4Vinci/Scrapling) project.
 
 ---
 
-<p align="center"><a href="../README.md">&larr; Back to main README</a></p>
+<p align="center">
+    <strong><a href="../README.md">&larr; Back to main README</a></strong>
+</p>

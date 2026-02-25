@@ -1,37 +1,67 @@
-<h1 align="center">
-    GeoScrapling
-    <br>
-    <small>Geospatial Intelligence meets Web Scraping</small>
-</h1>
+<div align="center">
 
-<p align="center">
+<h1>GeoScrapling</h1>
+<h3>Geospatial Intelligence meets Web Scraping</h3>
+
+<p>
     <a href="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml">
-        <img alt="Tests" src="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/tests.yml/badge.svg"></a>
+        <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/Osman-Geomatics93/GeoScrapling/tests.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=Tests"></a>
+    &nbsp;
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling/actions/workflows/geo-tests.yml">
+        <img alt="Geo Tests" src="https://img.shields.io/github/actions/workflow/status/Osman-Geomatics93/GeoScrapling/geo-tests.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=Geo%20Tests"></a>
+    &nbsp;
+    <a href="https://github.com/Osman-Geomatics93/GeoScrapling">
+        <img alt="Code Quality" src="https://img.shields.io/badge/Code_Quality-A-brightgreen?style=for-the-badge&logo=codeclimate&logoColor=white"></a>
+</p>
+
+<p>
     <a href="https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/LICENSE">
-        <img alt="License" src="https://img.shields.io/github/license/Osman-Geomatics93/GeoScrapling"></a>
+        <img alt="License" src="https://img.shields.io/github/license/Osman-Geomatics93/GeoScrapling?style=for-the-badge&logo=opensourceinitiative&logoColor=white"></a>
+    &nbsp;
     <a href="https://pypi.org/project/scrapling/">
-        <img alt="Python versions" src="https://img.shields.io/pypi/pyversions/scrapling.svg"></a>
+        <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
+    &nbsp;
+    <img alt="Version" src="https://img.shields.io/badge/Version-0.4-blue?style=for-the-badge&logo=semver&logoColor=white">
 </p>
 
-<p align="center">
-    <a href="#geospatial-intelligence-geoscrapling"><strong>Geospatial</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/parsing/selection/"><strong>Selection</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/fetching/choosing/"><strong>Fetchers</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/spiders/architecture.html"><strong>Spiders</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/spiders/proxy-blocking.html"><strong>Proxy Rotation</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/cli/overview/"><strong>CLI</strong></a>
-    &middot;
-    <a href="https://scrapling.readthedocs.io/en/latest/ai/mcp-server/"><strong>MCP</strong></a>
-    &middot;
-    <a href="docs/GEO_README.md"><strong>Geo Docs</strong></a>
+<!-- Stats Bar -->
+<p>
+    <img alt="EPSG Codes" src="https://img.shields.io/badge/9,000+_EPSG_Codes-informational?style=flat-square&logo=openstreetmap&logoColor=white">
+    &nbsp;
+    <img alt="Export Formats" src="https://img.shields.io/badge/8_Export_Formats-informational?style=flat-square&logo=files&logoColor=white">
+    &nbsp;
+    <img alt="CLI Commands" src="https://img.shields.io/badge/10_CLI_Commands-informational?style=flat-square&logo=gnubash&logoColor=white">
+    &nbsp;
+    <img alt="Geo Tests" src="https://img.shields.io/badge/188_Geo_Tests-informational?style=flat-square&logo=pytest&logoColor=white">
+    &nbsp;
+    <img alt="LOC" src="https://img.shields.io/badge/4,500+_LOC-informational?style=flat-square&logo=codeclimate&logoColor=white">
 </p>
 
-**GeoScrapling** is a geospatial-enhanced fork of [Scrapling](https://github.com/D4Vinci/Scrapling) that combines a full-featured web scraping framework with professional-grade geospatial capabilities. It inherits all of Scrapling's strengths — adaptive parsing, anti-bot bypass, spider framework, MCP server — and adds coordinate extraction, CRS transformations, OGC web-service clients, multi-format spatial export, geo-aware spiders, and spatial storage for geomatics, geoinformatics, and surveying professionals.
+<!-- Navigation -->
+<p>
+    <a href="#why-geoscrapling"><strong>Why GeoScrapling?</strong></a>
+    &middot;
+    <a href="#-geospatial-intelligence"><strong>Geospatial</strong></a>
+    &middot;
+    <a href="#-web-scraping"><strong>Web Scraping</strong></a>
+    &middot;
+    <a href="#-installation"><strong>Installation</strong></a>
+    &middot;
+    <a href="#-cli--interactive-shell"><strong>CLI</strong></a>
+    &middot;
+    <a href="docs/GEO_README.md"><strong>Full Geo Docs</strong></a>
+</p>
+
+</div>
+
+---
+
+## Why GeoScrapling?
+
+Geomatics and geoinformatics professionals routinely need to harvest spatial data from the web — scraping coordinate lists from government portals, pulling features from OGC services, or extracting geo-tagged metadata from HTML pages. Existing tools force you to glue together a web scraper, a coordinate parser, a CRS library, and a spatial exporter. **GeoScrapling unifies all of this into a single pipeline**: fetch a page, extract coordinates, transform CRS, validate geometries, and export to any spatial format — in a few lines of Python.
+
+> [!TIP]
+> GeoScrapling inherits **all** of Scrapling's strengths — adaptive parsing, anti-bot bypass, spider framework, MCP server, interactive shell — and layers professional-grade geospatial capabilities on top.
 
 ```python
 from scrapling.fetchers import StealthyFetcher
@@ -48,7 +78,68 @@ GeoExporter().export(features, "locations.geojson")
 
 ---
 
-## Geospatial Intelligence (GeoScrapling)
+## Feature Grid
+
+<table>
+<tr>
+    <td align="center" width="25%">
+        <h4>Coordinate Extraction</h4>
+        <p>Parse DD, DMS, UTM, MGRS, Geohash from text, HTML, KML, GeoJSON, and GML</p>
+    </td>
+    <td align="center" width="25%">
+        <h4>CRS Engine</h4>
+        <p>Transform between 9,000+ EPSG codes with auto UTM detection and datum shifts</p>
+    </td>
+    <td align="center" width="25%">
+        <h4>OGC Services</h4>
+        <p>Unified client for WFS, WMS, WCS, WMTS, and CSW web services</p>
+    </td>
+    <td align="center" width="25%">
+        <h4>Multi-Format Export</h4>
+        <p>Export to GeoJSON, Shapefile, KML, KMZ, GML, GeoPackage, GeoTIFF, and CSV</p>
+    </td>
+</tr>
+<tr>
+    <td align="center">
+        <h4>GeoSpider Pipeline</h4>
+        <p>Scrape-to-spatial pipeline with CRS transform, validation, and auto-export</p>
+    </td>
+    <td align="center">
+        <h4>Spatial Storage</h4>
+        <p>Persist to GeoPackage, PostGIS, and SpatiaLite with auto table creation</p>
+    </td>
+    <td align="center">
+        <h4>Spider Framework</h4>
+        <p>Scrapy-like API with concurrent crawling, pause/resume, and streaming</p>
+    </td>
+    <td align="center">
+        <h4>Anti-Bot Bypass</h4>
+        <p>Stealth mode with TLS fingerprinting and Cloudflare Turnstile bypass</p>
+    </td>
+</tr>
+<tr>
+    <td align="center">
+        <h4>Adaptive Parsing</h4>
+        <p>Smart element tracking that survives website layout changes</p>
+    </td>
+    <td align="center">
+        <h4>AI Integration</h4>
+        <p>Built-in MCP server for AI-assisted scraping with Claude and Cursor</p>
+    </td>
+    <td align="center">
+        <h4>Geo CLI</h4>
+        <p>10 commands for coord extraction, CRS lookup, conversion, and map preview</p>
+    </td>
+    <td align="center">
+        <h4>High Performance</h4>
+        <p>Optimized parsing engine outperforming most Python scraping libraries</p>
+    </td>
+</tr>
+</table>
+
+---
+
+## Geospatial Intelligence
 
 The geo module is what sets this fork apart. For the full API reference, see [docs/GEO_README.md](docs/GEO_README.md).
 
@@ -150,56 +241,16 @@ scrapling geo elevation 30.0444 31.2357
 scrapling geo preview parcels.shp
 ```
 
-> For the complete geospatial API — all classes, data models, validators, architecture, and testing — see [docs/GEO_README.md](docs/GEO_README.md).
+> [!IMPORTANT]
+> For the complete geospatial API — all classes, data models, validators, architecture, and testing — see **[docs/GEO_README.md](docs/GEO_README.md)**.
 
 ---
 
-## Key Features
+## Web Scraping
 
-### Spiders — A Full Crawling Framework
-- **Scrapy-like Spider API**: Define spiders with `start_urls`, async `parse` callbacks, and `Request`/`Response` objects.
-- **Concurrent Crawling**: Configurable concurrency limits, per-domain throttling, and download delays.
-- **Multi-Session Support**: Unified interface for HTTP requests and stealthy headless browsers in a single spider — route requests to different sessions by ID.
-- **Pause & Resume**: Checkpoint-based crawl persistence. Press Ctrl+C for a graceful shutdown; restart to resume from where you left off.
-- **Streaming Mode**: Stream scraped items as they arrive via `async for item in spider.stream()` with real-time stats.
-- **Blocked Request Detection**: Automatic detection and retry of blocked requests with customizable logic.
-- **Built-in Export**: Export results through hooks or the built-in JSON/JSONL with `result.items.to_json()` / `result.items.to_jsonl()`.
+<details>
+<summary><strong>Basic HTTP Requests</strong></summary>
 
-### Advanced Website Fetching with Session Support
-- **HTTP Requests**: Fast and stealthy HTTP requests with the `Fetcher` class. Can impersonate browsers' TLS fingerprint, headers, and use HTTP/3.
-- **Dynamic Loading**: Fetch dynamic websites with full browser automation through `DynamicFetcher` supporting Playwright's Chromium and Google's Chrome.
-- **Anti-bot Bypass**: Advanced stealth capabilities with `StealthyFetcher` and fingerprint spoofing. Bypasses Cloudflare Turnstile/Interstitial with automation.
-- **Session Management**: Persistent session support with `FetcherSession`, `StealthySession`, and `DynamicSession` for cookie and state management across requests.
-- **Proxy Rotation**: Built-in `ProxyRotator` with cyclic or custom rotation strategies across all session types, plus per-request proxy overrides.
-- **Domain Blocking**: Block requests to specific domains (and their subdomains) in browser-based fetchers.
-- **Async Support**: Complete async support across all fetchers and dedicated async session classes.
-
-### Adaptive Scraping & AI Integration
-- **Smart Element Tracking**: Relocate elements after website changes using intelligent similarity algorithms.
-- **Flexible Selection**: CSS selectors, XPath selectors, filter-based search, text search, regex search, and more.
-- **Find Similar Elements**: Automatically locate elements similar to found elements.
-- **MCP Server for AI**: Built-in MCP server for AI-assisted web scraping and data extraction with Claude, Cursor, and other AI tools.
-
-### High-Performance Architecture
-- **Lightning Fast**: Optimized performance outperforming most Python scraping libraries.
-- **Memory Efficient**: Optimized data structures and lazy loading for a minimal memory footprint.
-- **Fast JSON Serialization**: 10x faster than the standard library.
-- **Battle Tested**: 92% test coverage and full type hints coverage.
-
-### Developer-Friendly Experience
-- **Interactive Shell**: Built-in IPython shell with Scrapling integration and tools like curl-to-Scrapling conversion.
-- **CLI Usage**: Use Scrapling to scrape from the terminal without writing code.
-- **Rich Navigation API**: Advanced DOM traversal with parent, sibling, and child navigation methods.
-- **Enhanced Text Processing**: Built-in regex, cleaning methods, and optimized string operations.
-- **Auto Selector Generation**: Generate robust CSS/XPath selectors for any element.
-- **Familiar API**: Similar to Scrapy/BeautifulSoup with the same pseudo-elements used in Scrapy/Parsel.
-- **Complete Type Coverage**: Full type hints for excellent IDE support. Scanned with PyRight and MyPy.
-- **Docker Image**: Pre-built image with all browsers, automatically built with each release.
-
-## Getting Started
-
-### Basic Usage
-HTTP requests with session support
 ```python
 from scrapling.fetchers import Fetcher, FetcherSession
 
@@ -211,7 +262,12 @@ with FetcherSession(impersonate='chrome') as session:
 page = Fetcher.get('https://quotes.toscrape.com/')
 quotes = page.css('.quote .text::text').getall()
 ```
-Advanced stealth mode
+
+</details>
+
+<details>
+<summary><strong>Stealth Mode</strong></summary>
+
 ```python
 from scrapling.fetchers import StealthyFetcher, StealthySession
 
@@ -223,7 +279,12 @@ with StealthySession(headless=True, solve_cloudflare=True) as session:
 page = StealthyFetcher.fetch('https://nopecha.com/demo/cloudflare')
 data = page.css('#padded_content a').getall()
 ```
-Full browser automation
+
+</details>
+
+<details>
+<summary><strong>Full Browser Automation</strong></summary>
+
 ```python
 from scrapling.fetchers import DynamicFetcher, DynamicSession
 
@@ -236,8 +297,13 @@ page = DynamicFetcher.fetch('https://quotes.toscrape.com/')
 data = page.css('.quote .text::text').getall()
 ```
 
-### Spiders
+</details>
+
+<details>
+<summary><strong>Spider Framework</strong></summary>
+
 Build full crawlers with concurrent requests, multiple session types, and pause/resume:
+
 ```python
 from scrapling.spiders import Spider, Request, Response
 
@@ -262,7 +328,11 @@ print(f"Scraped {len(result.items)} quotes")
 result.items.to_json("quotes.json")
 ```
 
-### Advanced Parsing & Navigation
+</details>
+
+<details>
+<summary><strong>Advanced Parsing & Navigation</strong></summary>
+
 ```python
 from scrapling.fetchers import Fetcher
 
@@ -281,7 +351,12 @@ parent_container = first_quote.parent
 similar_elements = first_quote.find_similar()
 ```
 
-## Performance Benchmarks
+</details>
+
+---
+
+<details>
+<summary><strong>Performance Benchmarks</strong></summary>
 
 ### Text Extraction Speed Test (5000 nested elements)
 
@@ -298,37 +373,41 @@ similar_elements = first_quote.find_similar()
 
 > All benchmarks represent averages of 100+ runs. See [benchmarks.py](benchmarks.py) for methodology.
 
+</details>
+
+---
+
 ## Installation
 
-Scrapling requires Python 3.10 or higher:
-
 ```bash
-pip install scrapling
+pip install scrapling[geo]
 ```
 
-This installs only the parser engine. Add extras for additional features:
+> [!NOTE]
+> This installs the full GeoScrapling toolkit: the Scrapling parsing engine, all fetchers, and the complete geospatial module (`pyproj`, `shapely`, `geopandas`, `fiona`, `rasterio`, `owslib`, and more). Run `scrapling install` after to set up browser dependencies.
 
-### Optional Dependencies
+<details>
+<summary><strong>All Installation Options</strong></summary>
 
-1. Install fetchers and browser dependencies:
-    ```bash
-    pip install "scrapling[fetchers]"
-    scrapling install
-    ```
+| Extra | Command | What You Get |
+|---|---|---|
+| **Base** | `pip install scrapling` | Parser engine only |
+| **Fetchers** | `pip install "scrapling[fetchers]"` | HTTP + browser fetchers |
+| **AI** | `pip install "scrapling[ai]"` | MCP server for Claude/Cursor |
+| **Shell** | `pip install "scrapling[shell]"` | Interactive shell & `extract` command |
+| **Geo** | `pip install "scrapling[geo]"` | Full geospatial module |
+| **All** | `pip install "scrapling[all]"` | Everything above |
 
-2. Extra features:
-   - MCP server: `pip install "scrapling[ai]"`
-   - Interactive shell & `extract` command: `pip install "scrapling[shell]"`
-   - Geospatial features: `pip install "scrapling[geo]"`
-   - Everything: `pip install "scrapling[all]"`
+After installing any extra, run `scrapling install` to set up browser dependencies.
 
-   Remember to run `scrapling install` after any of these extras to install browser dependencies (if you haven't already).
-
-### Docker
-Pull a pre-built image with all extras and browsers:
+**Docker** — pre-built image with all extras and browsers:
 ```bash
 docker pull ghcr.io/osman-geomatics93/geoscrapling:latest
 ```
+
+</details>
+
+---
 
 ## CLI & Interactive Shell
 
@@ -346,26 +425,31 @@ scrapling extract stealthy-fetch 'https://nopecha.com/demo/cloudflare' captchas.
 > [!NOTE]
 > There are many additional features including the MCP server and the interactive shell. Check out the full documentation [here](https://scrapling.readthedocs.io/en/latest/).
 
+---
+
 ## Contributing
 
-We welcome contributions! Please read our [contributing guidelines](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/CONTRIBUTING.md) before getting started.
+We welcome contributions! Please read our [Contributing Guidelines](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/CONTRIBUTING.md) and [Code of Conduct](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/CODE_OF_CONDUCT.md) before getting started.
 
-## Disclaimer
+---
 
 > [!CAUTION]
-> This library is provided for educational and research purposes only. By using this library, you agree to comply with local and international data scraping and privacy laws. The authors and contributors are not responsible for any misuse of this software. Always respect the terms of service of websites and robots.txt files.
+> **Disclaimer** — This library is provided for educational and research purposes only. By using this library, you agree to comply with local and international data scraping and privacy laws. The authors and contributors are not responsible for any misuse of this software. Always respect the terms of service of websites and robots.txt files.
+
+---
 
 ## License
 
-This work is licensed under the BSD-3-Clause License.
+This work is licensed under the [BSD-3-Clause License](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/LICENSE).
 
 ## Acknowledgments
 
 This project includes code adapted from:
 - [Scrapling](https://github.com/D4Vinci/Scrapling) by Karim Shoair — the original web scraping framework this fork is built on
-- Parsel (BSD License) — Used for the [translator](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/scrapling/core/translator.py) submodule
+- [Parsel](https://github.com/scrapy/parsel) (BSD License) — Used for the [translator](https://github.com/Osman-Geomatics93/GeoScrapling/blob/main/scrapling/core/translator.py) submodule
 
 ---
+
 <div align="center">
-    <small>Built on <a href="https://github.com/D4Vinci/Scrapling">Scrapling</a> by Karim Shoair &middot; Geospatial extension by <a href="https://github.com/Osman-Geomatics93">Osman-Geomatics93</a></small>
+    <sub>Built on <a href="https://github.com/D4Vinci/Scrapling">Scrapling</a> by Karim Shoair &middot; Geospatial extension by <a href="https://github.com/Osman-Geomatics93">Osman-Geomatics93</a></sub>
 </div>
