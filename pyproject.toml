@@ -31,6 +31,12 @@ keywords = [
     "headless",
     "scraper",
     "chrome",
+    "geospatial",
+    "gis",
+    "ogc",
+    "wfs",
+    "wms",
+    "coordinate-extraction",
 ]
 requires-python = ">=3.10"
 classifiers = [
@@ -48,6 +54,7 @@ classifiers = [
     "Topic :: Text Processing :: Markup",
     "Topic :: Text Processing :: Markup :: HTML",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: GIS",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -89,8 +96,21 @@ shell = [
     "markdownify>=1.2.0",
     "scrapling[fetchers]",
 ]
+geo = [
+    "pyproj>=3.6.0",
+    "shapely>=2.0.0",
+    "fiona>=1.9.0",
+    "rasterio>=1.3.0",
+    "geopandas>=0.14.0",
+    "owslib>=0.31.0",
+    "geojson>=3.1.0",
+    "folium>=0.15.0",
+    "fastkml>=1.0",
+    "numpy>=1.24.0",
+    "click>=8.3.0",
+]
 all = [
-    "scrapling[ai,shell]",
+    "scrapling[ai,shell,geo]",
 ]
 
 [project.urls]

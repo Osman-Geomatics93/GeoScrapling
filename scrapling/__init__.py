@@ -20,8 +20,27 @@ _LAZY_IMPORTS = {
     "AsyncFetcher": ("scrapling.fetchers", "AsyncFetcher"),
     "StealthyFetcher": ("scrapling.fetchers", "StealthyFetcher"),
     "DynamicFetcher": ("scrapling.fetchers", "DynamicFetcher"),
+    # GeoScrapling — geospatial extension
+    "GeoSpider": ("scrapling.geo.spiders.base", "GeoSpider"),
+    "OGCFetcher": ("scrapling.geo.fetchers.ogc", "OGCFetcher"),
+    "SatelliteFetcher": ("scrapling.geo.fetchers.satellite", "SatelliteFetcher"),
+    "GNSSFetcher": ("scrapling.geo.fetchers.gnss", "GNSSFetcher"),
+    "ElevationFetcher": ("scrapling.geo.fetchers.elevation", "ElevationFetcher"),
+    "CadastralFetcher": ("scrapling.geo.fetchers.cadastral", "CadastralFetcher"),
+    "CoordinateExtractor": ("scrapling.geo.parsers.coordinate", "CoordinateExtractor"),
+    "CRSManager": ("scrapling.geo.crs.manager", "CRSManager"),
+    "GeoExporter": ("scrapling.geo.exporters.base", "GeoExporter"),
+    "GeoPoint": ("scrapling.geo.models", "GeoPoint"),
+    "GeoFeature": ("scrapling.geo.models", "GeoFeature"),
+    "BoundingBox": ("scrapling.geo.models", "BoundingBox"),
 }
-__all__ = ["Selector", "Fetcher", "AsyncFetcher", "StealthyFetcher", "DynamicFetcher"]
+__all__ = [
+    "Selector", "Fetcher", "AsyncFetcher", "StealthyFetcher", "DynamicFetcher",
+    # Geo exports
+    "GeoSpider", "OGCFetcher", "SatelliteFetcher", "GNSSFetcher",
+    "ElevationFetcher", "CadastralFetcher", "CoordinateExtractor",
+    "CRSManager", "GeoExporter", "GeoPoint", "GeoFeature", "BoundingBox",
+]
 
 
 def __getattr__(name: str) -> Any:
@@ -35,4 +54,4 @@ def __getattr__(name: str) -> Any:
 
 def __dir__() -> list[str]:
     """Support for dir() and autocomplete."""
-    return sorted(__all__ + ["fetchers", "parser", "cli", "core", "__author__", "__version__", "__copyright__"])
+    return sorted(__all__ + ["fetchers", "parser", "cli", "core", "geo", "__author__", "__version__", "__copyright__"])
