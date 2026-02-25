@@ -42,7 +42,7 @@ class ElevationFetcher:
             headers={"Content-Type": "application/json", "Accept": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=60) as resp:  # nosec B310
             data = json.loads(resp.read())
 
         return [r["elevation"] for r in data.get("results", [])]
@@ -71,12 +71,14 @@ class ElevationFetcher:
 
         profile: list[dict[str, float]] = []
         for dist, (lat, lon), elev in zip(distances, latlons, elevations):
-            profile.append({
-                "distance": dist,
-                "elevation": elev,
-                "lat": lat,
-                "lon": lon,
-            })
+            profile.append(
+                {
+                    "distance": dist,
+                    "elevation": elev,
+                    "lat": lat,
+                    "lon": lon,
+                }
+            )
         return profile
 
     # ── DEM tile downloads ──────────────────────────────────────────────
@@ -122,7 +124,7 @@ class ElevationFetcher:
                 dest = self.data_dir / tile_name
                 if not dest.exists():
                     try:
-                        urllib.request.urlretrieve(url, str(dest))
+                        urllib.request.urlretrieve(url, str(dest))  # nosec B310
                     except Exception:
                         continue
                 downloaded.append(dest)

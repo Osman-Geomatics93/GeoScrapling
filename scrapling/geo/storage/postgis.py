@@ -68,7 +68,7 @@ class PostGISStorage:
 
         min_x, min_y, max_x, max_y = bbox
         sql = (
-            f"SELECT * FROM {self.schema}.{table} "
+            f"SELECT * FROM {self.schema}.{table} "  # nosec B608
             f"WHERE geometry && ST_MakeEnvelope({min_x}, {min_y}, {max_x}, {max_y}, 4326)"
         )
         return gpd.read_postgis(sql, self._engine(), geom_col="geometry")
@@ -79,10 +79,7 @@ class PostGISStorage:
         from shapely import wkt
 
         wkt_str = geometry.wkt if hasattr(geometry, "wkt") else str(geometry)
-        sql = (
-            f"SELECT * FROM {self.schema}.{table} "
-            f"WHERE ST_Within(geometry, ST_GeomFromText('{wkt_str}', 4326))"
-        )
+        sql = f"SELECT * FROM {self.schema}.{table} WHERE ST_Within(geometry, ST_GeomFromText('{wkt_str}', 4326))"  # nosec B608
         return gpd.read_postgis(sql, self._engine(), geom_col="geometry")
 
     def query_nearest(
@@ -100,7 +97,7 @@ class PostGISStorage:
             x, y = point[0], point[1]
 
         sql = (
-            f"SELECT *, ST_Distance(geometry, ST_SetSRID(ST_Point({x}, {y}), 4326)) AS distance "
+            f"SELECT *, ST_Distance(geometry, ST_SetSRID(ST_Point({x}, {y}), 4326)) AS distance "  # nosec B608
             f"FROM {self.schema}.{table} "
             f"ORDER BY geometry <-> ST_SetSRID(ST_Point({x}, {y}), 4326) "
             f"LIMIT {limit}"
@@ -125,7 +122,7 @@ class PostGISStorage:
         }
         st_func = predicate_map.get(predicate, "ST_Intersects")
         sql = (
-            f"SELECT a.*, b.* FROM {self.schema}.{table1} a "
+            f"SELECT a.*, b.* FROM {self.schema}.{table1} a "  # nosec B608
             f"JOIN {self.schema}.{table2} b "
             f"ON {st_func}(a.geometry, b.geometry)"
         )

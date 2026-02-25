@@ -42,13 +42,13 @@ class OGCSpider(GeoSpider):
         async for item in self.parse_capabilities(response):
             yield item
 
-    async def parse_capabilities(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse_capabilities(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Parse GetCapabilities and yield requests for each layer."""
         from scrapling.geo.parsers.ogc import OGCResponseParser
 
         parser = OGCResponseParser()
+        if response.request is None:
+            return
         stype = response.request.meta.get("service_type", "WFS")
         service_url = response.request.meta.get("service_url", self.service_urls[0] if self.service_urls else "")
 
@@ -85,9 +85,7 @@ class OGCSpider(GeoSpider):
 
         yield None  # End of generator
 
-    async def parse_features(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse_features(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Parse WFS features into GeoFeatures."""
         from scrapling.geo.parsers.ogc import OGCResponseParser
 

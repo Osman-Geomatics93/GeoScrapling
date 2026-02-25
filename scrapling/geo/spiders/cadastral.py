@@ -46,9 +46,7 @@ class CadastralSpider(GeoSpider):
             sid=self._session_manager.default_session_id,
         )
 
-    async def parse(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Fetch cadastral parcels and boundaries."""
         from scrapling.geo.fetchers.cadastral import CadastralFetcher
 

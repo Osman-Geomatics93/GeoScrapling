@@ -41,9 +41,7 @@ class GeoportalSpider(GeoSpider):
                 sid=self._session_manager.default_session_id,
             )
 
-    async def parse(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Parse a geoportal catalogue page."""
         from scrapling.parser import Selector
 
@@ -59,7 +57,7 @@ class GeoportalSpider(GeoSpider):
         # Discover OGC service links (WMS/WFS/WCS/WMTS)
         for link in sel.css("a[href]"):
             href = link.attrib.get("href", "")
-            text = str(link.text()).lower() if link.text() else ""
+            text = link.css("::text").get("").lower()
             if any(svc in href.lower() for svc in ("wms", "wfs", "wcs", "wmts", "service=")):
                 yield {
                     "type": "ogc_service_link",
@@ -85,9 +83,7 @@ class GeoportalSpider(GeoSpider):
                     sid=self._session_manager.default_session_id,
                 )
 
-    async def parse_service(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse_service(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Parse an OGC service capabilities page."""
         from scrapling.geo.parsers.ogc import OGCResponseParser
 

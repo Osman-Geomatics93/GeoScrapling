@@ -10,9 +10,7 @@ class CoordinateValidator:
     _LAT_MIN, _LAT_MAX = -90.0, 90.0
     _LON_MIN, _LON_MAX = -180.0, 180.0
 
-    def validate_lat_lon(
-        self, lat: float, lon: float
-    ) -> tuple[bool, list[str]]:
+    def validate_lat_lon(self, lat: float, lon: float) -> tuple[bool, list[str]]:
         """Validate WGS84 latitude/longitude pair."""
         errors: list[str] = []
         if not (self._LAT_MIN <= lat <= self._LAT_MAX):
@@ -37,9 +35,7 @@ class CoordinateValidator:
             errors.append(f"Northing {northing} out of range [0, 10000000]")
         return (len(errors) == 0, errors)
 
-    def validate_precision(
-        self, coord: float, min_decimals: int
-    ) -> bool:
+    def validate_precision(self, coord: float, min_decimals: int) -> bool:
         """Check that a coordinate has at least *min_decimals* decimal places."""
         text = f"{coord:.15g}"
         if "." not in text:
@@ -66,9 +62,7 @@ class CoordinateValidator:
             return False
         return True
 
-    def check_in_country(
-        self, lat: float, lon: float, country_code: str
-    ) -> bool:
+    def check_in_country(self, lat: float, lon: float, country_code: str) -> bool:
         """Check whether a coordinate falls within a country's bounding box.
 
         Uses approximate bounding boxes for a handful of common countries.

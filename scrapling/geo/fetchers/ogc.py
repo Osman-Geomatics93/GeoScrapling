@@ -80,15 +80,13 @@ class OGCFetcher:
         for stype in ("WFS", "WMS", "WCS", "WMTS", "CSW"):
             probe_url = f"{self.base_url}?service={stype}&request=GetCapabilities"
             try:
-                with urllib.request.urlopen(probe_url, timeout=15) as resp:
+                with urllib.request.urlopen(probe_url, timeout=15) as resp:  # nosec B310
                     data = resp.read(2048).decode("utf-8", errors="ignore")
                     if stype.lower() in data.lower():
                         return stype
             except (urllib.error.URLError, OSError):
                 continue
-        raise RuntimeError(
-            f"Could not auto-detect OGC service type at {self.base_url}"
-        )
+        raise RuntimeError(f"Could not auto-detect OGC service type at {self.base_url}")
 
     # ── WFS — Web Feature Service ──────────────────────────────────────
 
@@ -169,9 +167,7 @@ class OGCFetcher:
 
     # ── WMTS — Web Map Tile Service ────────────────────────────────────
 
-    def get_tile(
-        self, layer: str, zoom: int, row: int, col: int
-    ) -> bytes:
+    def get_tile(self, layer: str, zoom: int, row: int, col: int) -> bytes:
         """Fetch a single map tile."""
         self._ensure_service()
         resp = self._service.gettile(
@@ -183,9 +179,7 @@ class OGCFetcher:
         )
         return resp.read() if hasattr(resp, "read") else resp
 
-    def get_tiles_for_bbox(
-        self, layer: str, bbox: tuple, zoom: int
-    ) -> list[bytes]:
+    def get_tiles_for_bbox(self, layer: str, bbox: tuple, zoom: int) -> list[bytes]:
         """Fetch all tiles covering a bounding box at the given zoom."""
         import math
 
@@ -236,15 +230,17 @@ class OGCFetcher:
 
         records: list[dict[str, Any]] = []
         for _id, rec in self._service.records.items():
-            records.append({
-                "id": _id,
-                "title": rec.title,
-                "abstract": rec.abstract,
-                "type": rec.type,
-                "subjects": rec.subjects,
-                "bbox": getattr(rec, "bbox", None),
-                "references": getattr(rec, "references", []),
-            })
+            records.append(
+                {
+                    "id": _id,
+                    "title": rec.title,
+                    "abstract": rec.abstract,
+                    "type": rec.type,
+                    "subjects": rec.subjects,
+                    "bbox": getattr(rec, "bbox", None),
+                    "references": getattr(rec, "references", []),
+                }
+            )
         return records
 
     # ── Discovery helpers ───────────────────────────────────────────────

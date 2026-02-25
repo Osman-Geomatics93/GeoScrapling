@@ -131,16 +131,16 @@ class OGCResponseParser:
         for layer in root.iter("{http://www.opengis.net/wmts/1.0}Layer"):
             ows_id = layer.find("{http://www.opengis.net/ows/1.1}Identifier")
             ows_title = layer.find("{http://www.opengis.net/ows/1.1}Title")
-            result["layers"].append({
-                "identifier": ows_id.text if ows_id is not None else "",
-                "title": ows_title.text if ows_title is not None else "",
-            })
+            result["layers"].append(
+                {
+                    "identifier": ows_id.text if ows_id is not None else "",
+                    "title": ows_title.text if ows_title is not None else "",
+                }
+            )
 
         for tms in root.iter("{http://www.opengis.net/wmts/1.0}TileMatrixSet"):
             ows_id = tms.find("{http://www.opengis.net/ows/1.1}Identifier")
-            result["tile_matrix_sets"].append(
-                ows_id.text if ows_id is not None else ""
-            )
+            result["tile_matrix_sets"].append(ows_id.text if ows_id is not None else "")
 
         return result
 

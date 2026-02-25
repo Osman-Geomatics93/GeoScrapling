@@ -52,9 +52,7 @@ class GeoPackageStorage:
 
     # ── Read / query operations ─────────────────────────────────────────
 
-    def query_bbox(
-        self, table: str, bbox: tuple[float, float, float, float]
-    ) -> list[GeoFeature]:
+    def query_bbox(self, table: str, bbox: tuple[float, float, float, float]) -> list[GeoFeature]:
         """Query features within a bounding box."""
         import geopandas as gpd
         from shapely.geometry import box

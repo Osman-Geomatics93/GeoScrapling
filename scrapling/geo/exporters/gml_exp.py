@@ -7,9 +7,7 @@ from pathlib import Path
 from scrapling.geo.models import GeoFeature
 
 
-def gml_export(
-    features: list[GeoFeature], path: str, crs: str = "EPSG:4326"
-) -> Path:
+def gml_export(features: list[GeoFeature], path: str, crs: str = "EPSG:4326") -> Path:
     """Write features to a GML file using fiona."""
     import fiona
     from fiona.crs import from_epsg
@@ -36,8 +34,11 @@ def gml_export(
     epsg_code = int(crs.split(":")[1]) if ":" in crs else 4326
 
     with fiona.open(
-        str(out), "w", driver="GML",
-        crs=from_epsg(epsg_code), schema=schema,
+        str(out),
+        "w",
+        driver="GML",
+        crs=from_epsg(epsg_code),
+        schema=schema,
     ) as dst:
         for f in features:
             record = {
