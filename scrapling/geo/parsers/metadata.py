@@ -40,9 +40,7 @@ class SpatialMetadataParser:
             citation = ident.find(self._ns("gmd:citation/gmd:CI_Citation"))
             if citation is not None:
                 meta["title"] = self._text(citation, "gmd:title/gco:CharacterString")
-                meta["date"] = self._text(
-                    citation, "gmd:date/gmd:CI_Date/gmd:date/gco:Date"
-                )
+                meta["date"] = self._text(citation, "gmd:date/gmd:CI_Date/gmd:date/gco:Date")
             meta["abstract"] = self._text(ident, "gmd:abstract/gco:CharacterString")
 
             # Keywords
@@ -54,9 +52,7 @@ class SpatialMetadataParser:
             meta["keywords"] = keywords
 
             # Extent / bbox
-            extent = ident.find(
-                self._ns("gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox")
-            )
+            extent = ident.find(self._ns("gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"))
             if extent is not None:
                 meta["bbox"] = {
                     "west": self._float(extent, "gmd:westBoundLongitude/gco:Decimal"),

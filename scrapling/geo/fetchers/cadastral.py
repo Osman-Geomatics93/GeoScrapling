@@ -7,9 +7,12 @@ country-specific backends.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from scrapling.geo.models import BoundingBox
+
+if TYPE_CHECKING:
+    from scrapling.geo.fetchers.ogc import OGCFetcher
 
 
 class CadastralFetcher:
@@ -25,7 +28,7 @@ class CadastralFetcher:
 
     def __init__(self, wfs_url: str | None = None):
         self.wfs_url = wfs_url or self.DEFAULT_WFS
-        self._ogc = None
+        self._ogc: OGCFetcher | None = None
 
     def _get_ogc(self):
         if self._ogc is None and self.wfs_url:

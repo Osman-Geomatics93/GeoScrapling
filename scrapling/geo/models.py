@@ -146,17 +146,11 @@ class BoundingBox:
         return box(self.min_x, self.min_y, self.max_x, self.max_y)
 
     def contains(self, point: GeoPoint) -> bool:
-        return (
-            self.min_x <= point.x <= self.max_x
-            and self.min_y <= point.y <= self.max_y
-        )
+        return self.min_x <= point.x <= self.max_x and self.min_y <= point.y <= self.max_y
 
     def intersects(self, other: BoundingBox) -> bool:
         return not (
-            self.max_x < other.min_x
-            or self.min_x > other.max_x
-            or self.max_y < other.min_y
-            or self.min_y > other.max_y
+            self.max_x < other.min_x or self.min_x > other.max_x or self.max_y < other.min_y or self.min_y > other.max_y
         )
 
     def transform(self, target_crs: str) -> BoundingBox:

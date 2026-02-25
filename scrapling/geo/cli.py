@@ -11,8 +11,7 @@ try:
     from click import group, argument, option, echo
 except (ImportError, ModuleNotFoundError) as e:
     raise ModuleNotFoundError(
-        "The 'click' package is required for CLI commands. "
-        "Install scrapling with the [fetchers] extra."
+        "The 'click' package is required for CLI commands. Install scrapling with the [fetchers] extra."
     ) from e
 
 
@@ -23,6 +22,7 @@ def geo():
 
 
 # ── scrapling geo capabilities ──────────────────────────────────────────────
+
 
 @geo.command(help="Probe OGC service capabilities.")
 @argument("url")
@@ -45,6 +45,7 @@ def capabilities(url: str):
 
 # ── scrapling geo features ──────────────────────────────────────────────────
 
+
 @geo.command(help="Download WFS features.")
 @argument("wfs_url")
 @argument("layer")
@@ -61,8 +62,7 @@ def features(wfs_url: str, layer: str, output: str, max_features: int):
     echo(f"Fetched {len(gdf)} features from {layer}")
 
     geo_features = [
-        GeoFeature(geometry=row.geometry,
-                    properties={c: row[c] for c in gdf.columns if c != "geometry"})
+        GeoFeature(geometry=row.geometry, properties={c: row[c] for c in gdf.columns if c != "geometry"})
         for _, row in gdf.iterrows()
     ]
     GeoExporter().export(geo_features, output)
@@ -70,6 +70,7 @@ def features(wfs_url: str, layer: str, output: str, max_features: int):
 
 
 # ── scrapling geo convert ───────────────────────────────────────────────────
+
 
 @geo.command(help="Convert between geospatial formats.")
 @argument("input_path")
@@ -99,6 +100,7 @@ def convert(input_path: str, output_path: str, crs: str | None):
 
 # ── scrapling geo transform ─────────────────────────────────────────────────
 
+
 @geo.command(help="Transform a geospatial file to a different CRS.")
 @argument("file_path")
 @argument("target_crs")
@@ -116,6 +118,7 @@ def transform(file_path: str, target_crs: str, output: str | None):
 
 
 # ── scrapling geo validate ──────────────────────────────────────────────────
+
 
 @geo.command(help="Validate geometries in a geospatial file.")
 @argument("file_path")
@@ -142,6 +145,7 @@ def validate(file_path: str):
 
 # ── scrapling geo extract-coords ────────────────────────────────────────────
 
+
 @geo.command("extract-coords", help="Extract coordinates from a webpage.")
 @argument("url")
 def extract_coords(url: str):
@@ -161,6 +165,7 @@ def extract_coords(url: str):
 
 # ── scrapling geo elevation ─────────────────────────────────────────────────
 
+
 @geo.command(help="Query elevation at a point.")
 @argument("lat", type=float)
 @argument("lon", type=float)
@@ -173,6 +178,7 @@ def elevation(lat: float, lon: float):
 
 
 # ── scrapling geo preview ──────────────────────────────────────────────────
+
 
 @geo.command(help="Open a map preview in the browser.")
 @argument("file_path")
@@ -199,6 +205,7 @@ def preview(file_path: str):
 
 # ── scrapling geo search ────────────────────────────────────────────────────
 
+
 @geo.command(help="Search a CSW geospatial catalog.")
 @argument("csw_url")
 @argument("keyword")
@@ -217,6 +224,7 @@ def search(csw_url: str, keyword: str, max_records: int):
 
 
 # ── scrapling geo tiles ─────────────────────────────────────────────────────
+
 
 @geo.command(help="Download map tiles from a WMTS service.")
 @argument("wmts_url")

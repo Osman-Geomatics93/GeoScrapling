@@ -7,9 +7,7 @@ from pathlib import Path
 from scrapling.geo.models import GeoFeature
 
 
-def shapefile_export(
-    features: list[GeoFeature], path: str, crs: str = "EPSG:4326"
-) -> Path:
+def shapefile_export(features: list[GeoFeature], path: str, crs: str = "EPSG:4326") -> Path:
     """Write features to an ESRI Shapefile."""
     import fiona
     from fiona.crs import from_epsg
@@ -37,8 +35,11 @@ def shapefile_export(
 
     epsg_code = int(crs.split(":")[1]) if ":" in crs else 4326
     with fiona.open(
-        str(out), "w", driver="ESRI Shapefile",
-        crs=from_epsg(epsg_code), schema=schema,
+        str(out),
+        "w",
+        driver="ESRI Shapefile",
+        crs=from_epsg(epsg_code),
+        schema=schema,
     ) as dst:
         for f in features:
             record = {

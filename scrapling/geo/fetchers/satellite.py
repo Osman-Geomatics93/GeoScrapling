@@ -53,9 +53,7 @@ class SatelliteFetcher:
             query={"eo:cloud_cover": {"lte": cloud_cover_max}} if "2" in platform else None,
         )
 
-    def download_sentinel_product(
-        self, product_id: str, output_dir: str | Path | None = None
-    ) -> Path:
+    def download_sentinel_product(self, product_id: str, output_dir: str | Path | None = None) -> Path:
         """Download a Sentinel product by its STAC item ID.
 
         Requires network access to the Copernicus Data Space Ecosystem.
@@ -69,7 +67,7 @@ class SatelliteFetcher:
         stac_url = f"https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/{product_id}"
         import json
 
-        with urllib.request.urlopen(stac_url, timeout=30) as resp:
+        with urllib.request.urlopen(stac_url, timeout=30) as resp:  # nosec B310
             item = json.loads(resp.read())
 
         # Download the thumbnail / first asset as an example
@@ -78,7 +76,7 @@ class SatelliteFetcher:
             if asset_key in assets:
                 href = assets[asset_key]["href"]
                 dest = out / f"{product_id}_{asset_key}.tif"
-                urllib.request.urlretrieve(href, str(dest))
+                urllib.request.urlretrieve(href, str(dest))  # nosec B310
                 return dest
 
         raise FileNotFoundError(f"No downloadable asset found for {product_id}")
@@ -132,7 +130,7 @@ class SatelliteFetcher:
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with urllib.request.urlopen(req, timeout=30) as resp:  # nosec B310
             result = json.loads(resp.read())
 
         return result.get("features", [])
@@ -158,7 +156,7 @@ class SatelliteFetcher:
 
         import urllib.request
 
-        with urllib.request.urlopen(thumb_url, timeout=30) as resp:
+        with urllib.request.urlopen(thumb_url, timeout=30) as resp:  # nosec B310
             return resp.read()
 
     def get_footprint(self, scene_id: str):

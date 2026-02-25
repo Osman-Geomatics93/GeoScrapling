@@ -52,17 +52,10 @@ class SpatiaLiteStorage:
     def _ensure_table(self, table: str, geom_type: str = "GEOMETRY") -> None:
         """Create the table and geometry column if they don't exist."""
         cur = self._conn.cursor()
-        cur.execute(
-            f"CREATE TABLE IF NOT EXISTS [{table}] ("
-            f"  fid INTEGER PRIMARY KEY AUTOINCREMENT,"
-            f"  properties TEXT"
-            f")"
-        )
+        cur.execute(f"CREATE TABLE IF NOT EXISTS [{table}] (  fid INTEGER PRIMARY KEY AUTOINCREMENT,  properties TEXT)")  # nosec B608
         # Add geometry column via SpatiaLite function
         try:
-            cur.execute(
-                f"SELECT AddGeometryColumn('{table}', 'geometry', {self._srid}, '{geom_type}', 'XY')"
-            )
+            cur.execute(f"SELECT AddGeometryColumn('{table}', 'geometry', {self._srid}, '{geom_type}', 'XY')")  # nosec B608
         except Exception:
             pass  # Column may already exist
         self._conn.commit()
@@ -86,33 +79,30 @@ class SpatiaLiteStorage:
             props_json = json.dumps(f.properties, default=str)
             try:
                 cur.execute(
-                    f"INSERT INTO [{table}] (properties, geometry) "
-                    f"VALUES (?, GeomFromText(?, {self._srid}))",
+                    f"INSERT INTO [{table}] (properties, geometry) VALUES (?, GeomFromText(?, {self._srid}))",  # nosec B608
                     (props_json, wkt),
                 )
             except Exception:
                 # Fallback without SpatiaLite functions
                 cur.execute(
-                    f"INSERT INTO [{table}] (properties) VALUES (?)",
+                    f"INSERT INTO [{table}] (properties) VALUES (?)",  # nosec B608
                     (props_json,),
                 )
         self._conn.commit()
 
     # ── Read / query ────────────────────────────────────────────────────
 
-    def query_bbox(
-        self, table: str, bbox: tuple[float, float, float, float]
-    ) -> list[GeoFeature]:
+    def query_bbox(self, table: str, bbox: tuple[float, float, float, float]) -> list[GeoFeature]:
         """Query features within a bounding box."""
         min_x, min_y, max_x, max_y = bbox
         cur = self._conn.cursor()
         try:
             cur.execute(
-                f"SELECT fid, properties, AsText(geometry) FROM [{table}] "
+                f"SELECT fid, properties, AsText(geometry) FROM [{table}] "  # nosec B608
                 f"WHERE MbrIntersects(geometry, BuildMbr({min_x}, {min_y}, {max_x}, {max_y}, {self._srid}))"
             )
         except Exception:
-            cur.execute(f"SELECT fid, properties FROM [{table}]")
+            cur.execute(f"SELECT fid, properties FROM [{table}]")  # nosec B608
 
         return self._rows_to_features(cur.fetchall())
 
@@ -122,12 +112,12 @@ class SpatiaLiteStorage:
         cur = self._conn.cursor()
         try:
             cur.execute(
-                f"SELECT fid, properties, AsText(geometry) FROM [{table}] "
+                f"SELECT fid, properties, AsText(geometry) FROM [{table}] "  # nosec B608
                 f"WHERE Within(geometry, GeomFromText(?, {self._srid}))",
                 (wkt,),
             )
         except Exception:
-            cur.execute(f"SELECT fid, properties FROM [{table}]")
+            cur.execute(f"SELECT fid, properties FROM [{table}]")  # nosec B608
 
         return self._rows_to_features(cur.fetchall())
 

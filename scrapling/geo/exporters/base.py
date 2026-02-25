@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from scrapling.geo.models import GeoFeature
 
@@ -65,7 +65,7 @@ class GeoExporter:
             "csv": self.to_csv,
         }
 
-        handler = dispatch.get(fmt)
+        handler: Callable[[list[GeoFeature], str], Path] | None = dispatch.get(fmt)
         if handler is None:
             raise ValueError(f"Unsupported export format: {fmt!r}")
         return handler(transformed, str(out))

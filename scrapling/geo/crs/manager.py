@@ -39,9 +39,7 @@ class CRSManager:
             results.append((tx, ty))
         return results
 
-    def to_wgs84(
-        self, coords: list[tuple[float, float]], from_crs: str
-    ) -> list[tuple[float, float]]:
+    def to_wgs84(self, coords: list[tuple[float, float]], from_crs: str) -> list[tuple[float, float]]:
         """Shortcut: transform to WGS84 (EPSG:4326)."""
         return self.transform(coords, from_crs, "EPSG:4326")
 
@@ -89,9 +87,7 @@ class CRSManager:
         """Perform datum transformation with grid shifts."""
         return self.transform(coords, from_datum, to_datum)
 
-    def get_geoid_height(
-        self, lat: float, lon: float, geoid_model: str = "EGM2008"
-    ) -> float:
+    def get_geoid_height(self, lat: float, lon: float, geoid_model: str = "EGM2008") -> float:
         """Get geoid undulation at a point.
 
         Falls back to a simple approximation when the geoid grid is not

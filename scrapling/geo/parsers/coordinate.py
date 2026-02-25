@@ -69,8 +69,14 @@ class CoordinateExtractor:
             if h1 in "NS" and h2 in "EW":
                 lat = self.parse_dms(m1.group())
                 lon = self.parse_dms(m2.group())
-                points.append(GeoPoint(x=lon, y=lat, crs=self.default_crs,
-                                       quality=CoordinateQuality(source="text-dms", method="parsed")))
+                points.append(
+                    GeoPoint(
+                        x=lon,
+                        y=lat,
+                        crs=self.default_crs,
+                        quality=CoordinateQuality(source="text-dms", method="parsed"),
+                    )
+                )
                 used_dms.update({i, i + 1})
 
         # Decimal degree pairs
@@ -82,15 +88,24 @@ class CoordinateExtractor:
             if m.group("lon_h") and m.group("lon_h").upper() == "W":
                 lon = -lon
             if -90 <= lat <= 90 and -180 <= lon <= 180:
-                points.append(GeoPoint(x=lon, y=lat, crs=self.default_crs,
-                                       quality=CoordinateQuality(source="text-dd", method="parsed")))
+                points.append(
+                    GeoPoint(
+                        x=lon, y=lat, crs=self.default_crs, quality=CoordinateQuality(source="text-dd", method="parsed")
+                    )
+                )
 
         # UTM
         for m in _UTM.finditer(text):
             try:
                 lat, lon = self.parse_utm(m.group())
-                points.append(GeoPoint(x=lon, y=lat, crs=self.default_crs,
-                                       quality=CoordinateQuality(source="text-utm", method="parsed")))
+                points.append(
+                    GeoPoint(
+                        x=lon,
+                        y=lat,
+                        crs=self.default_crs,
+                        quality=CoordinateQuality(source="text-utm", method="parsed"),
+                    )
+                )
             except Exception:
                 pass
 
@@ -110,8 +125,9 @@ class CoordinateExtractor:
             if len(parts) == 2:
                 try:
                     lat, lon = float(parts[0]), float(parts[1])
-                    points.append(GeoPoint(x=lon, y=lat, crs="EPSG:4326",
-                                           quality=CoordinateQuality(source="meta-geo.position")))
+                    points.append(
+                        GeoPoint(x=lon, y=lat, crs="EPSG:4326", quality=CoordinateQuality(source="meta-geo.position"))
+                    )
                 except ValueError:
                     pass
 
@@ -120,10 +136,14 @@ class CoordinateExtractor:
         og_lon = selector.css('meta[property="place:location:longitude"]::attr(content)').get()
         if og_lat and og_lon:
             try:
-                points.append(GeoPoint(
-                    x=float(og_lon), y=float(og_lat), crs="EPSG:4326",
-                    quality=CoordinateQuality(source="meta-og"),
-                ))
+                points.append(
+                    GeoPoint(
+                        x=float(og_lon),
+                        y=float(og_lat),
+                        crs="EPSG:4326",
+                        quality=CoordinateQuality(source="meta-og"),
+                    )
+                )
             except ValueError:
                 pass
 
@@ -157,7 +177,7 @@ class CoordinateExtractor:
         if not headers or not rows:
             return gpd.GeoDataFrame()
 
-        df = pd.DataFrame(rows, columns=headers[: len(rows[0])] if headers else None)
+        df = pd.DataFrame(rows, columns=headers[: len(rows[0])] if headers else None)  # type: ignore[arg-type]
 
         # Auto-detect lat/lon columns
         lat_col = lon_col = None
@@ -169,15 +189,15 @@ class CoordinateExtractor:
                 lon_col = col
 
         if lat_col and lon_col:
-            df[lat_col] = pd.to_numeric(df[lat_col], errors="coerce")
-            df[lon_col] = pd.to_numeric(df[lon_col], errors="coerce")
+            df[lat_col] = pd.to_numeric(df[lat_col], errors="coerce")  # type: ignore[call-overload]
+            df[lon_col] = pd.to_numeric(df[lon_col], errors="coerce")  # type: ignore[call-overload]
             geometry = [
-                Point(row[lon_col], row[lat_col])
-                if pd.notna(row[lat_col]) and pd.notna(row[lon_col])
+                Point(float(row[lon_col]), float(row[lat_col]))
+                if pd.notna(row[lat_col]) and pd.notna(row[lon_col])  # type: ignore[arg-type]
                 else None
                 for _, row in df.iterrows()
             ]
-            return gpd.GeoDataFrame(df, geometry=geometry, crs="EPSG:4326")
+            return gpd.GeoDataFrame(df, geometry=geometry, crs="EPSG:4326")  # type: ignore[arg-type]
 
         return gpd.GeoDataFrame(df)
 
@@ -190,7 +210,7 @@ class CoordinateExtractor:
         features: list[GeoFeature] = []
         k = fastkml_mod.KML()
         k.from_string(content)
-        for doc in k.features():
+        for doc in k.features:  # type: ignore[union-attr]
             features.extend(self._walk_kml_features(doc))
         return features
 
@@ -280,16 +300,13 @@ class CoordinateExtractor:
         approximation if the package is not available.
         """
         try:
-            import mgrs as mgrs_lib
+            import mgrs as mgrs_lib  # type: ignore[import-untyped]
 
             m = mgrs_lib.MGRS()
             lat, lon = m.toLatLon(mgrs_string)
             return (lat, lon)
         except ImportError:
-            raise ImportError(
-                "The 'mgrs' package is required for MGRS parsing. "
-                "Install it with: pip install mgrs"
-            )
+            raise ImportError("The 'mgrs' package is required for MGRS parsing. Install it with: pip install mgrs")
 
     # ── Internal helpers ────────────────────────────────────────────────
 
@@ -312,10 +329,14 @@ class CoordinateExtractor:
                 try:
                     lat = float(obj["latitude"])
                     lon = float(obj["longitude"])
-                    out.append(GeoPoint(
-                        x=lon, y=lat, crs="EPSG:4326",
-                        quality=CoordinateQuality(source="json-ld"),
-                    ))
+                    out.append(
+                        GeoPoint(
+                            x=lon,
+                            y=lat,
+                            crs="EPSG:4326",
+                            quality=CoordinateQuality(source="json-ld"),
+                        )
+                    )
                 except (KeyError, ValueError, TypeError):
                     pass
             for v in obj.values():
@@ -331,10 +352,9 @@ class CoordinateExtractor:
             from shapely.geometry import shape
 
             geom = shape(element.geometry)
-            props = {"name": getattr(element, "name", None),
-                     "description": getattr(element, "description", None)}
+            props = {"name": getattr(element, "name", None), "description": getattr(element, "description", None)}
             features.append(GeoFeature(geometry=geom, properties=props, crs="EPSG:4326"))
         if hasattr(element, "features"):
-            for child in element.features():
+            for child in element.features:  # type: ignore[union-attr]
                 features.extend(self._walk_kml_features(child))
         return features

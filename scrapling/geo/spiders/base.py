@@ -124,9 +124,7 @@ class GeoSpider(Spider):
                 self.output_path,
                 format=self.output_format,
             )
-            self.logger.info(
-                "Exported %d features to %s", len(self._geo_features), self.output_path
-            )
+            self.logger.info("Exported %d features to %s", len(self._geo_features), self.output_path)
         await super().on_close()
 
     # ── Utility methods available in parse() ────────────────────────────

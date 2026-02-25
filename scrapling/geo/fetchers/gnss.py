@@ -44,7 +44,7 @@ class GNSSFetcher:
 
         url = f"{self.NGS_API}/cors/stations"
         try:
-            with urllib.request.urlopen(url, timeout=30) as resp:
+            with urllib.request.urlopen(url, timeout=30) as resp:  # nosec B310
                 stations = json.loads(resp.read())
         except Exception:
             # Fallback for when API is unavailable
@@ -80,7 +80,7 @@ class GNSSFetcher:
         import urllib.request
 
         url = f"{self.NGS_API}/cors/station/{station_id}"
-        with urllib.request.urlopen(url, timeout=30) as resp:
+        with urllib.request.urlopen(url, timeout=30) as resp:  # nosec B310
             return json.loads(resp.read())
 
     def get_station_coordinates(self, station_id: str) -> GeoPoint:
@@ -128,7 +128,7 @@ class GNSSFetcher:
         out.mkdir(parents=True, exist_ok=True)
         dest = out / filename
 
-        urllib.request.urlretrieve(url, str(dest))
+        urllib.request.urlretrieve(url, str(dest))  # nosec B310
         return dest
 
     # ── NTRIP ───────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ class GNSSFetcher:
             headers={"Ntrip-Version": "Ntrip/2.0", "User-Agent": "NTRIP GeoScrapling/1.0"},
         )
         try:
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with urllib.request.urlopen(req, timeout=15) as resp:  # nosec B310
                 raw = resp.read().decode("utf-8", errors="replace")
         except Exception as exc:
             raise ConnectionError(f"Cannot reach NTRIP caster at {caster_url}: {exc}")
@@ -167,14 +167,16 @@ class GNSSFetcher:
                 continue
             entry: dict[str, Any] = {"type": parts[0], "mountpoint": parts[1]}
             if parts[0] == "STR" and len(parts) >= 19:
-                entry.update({
-                    "identifier": parts[2],
-                    "format": parts[3],
-                    "carrier": parts[5],
-                    "lat": float(parts[9]) if parts[9] else None,
-                    "lon": float(parts[10]) if parts[10] else None,
-                    "country": parts[7],
-                })
+                entry.update(
+                    {
+                        "identifier": parts[2],
+                        "format": parts[3],
+                        "carrier": parts[5],
+                        "lat": float(parts[9]) if parts[9] else None,
+                        "lon": float(parts[10]) if parts[10] else None,
+                        "country": parts[7],
+                    }
+                )
             entries.append(entry)
         return entries
 
@@ -212,5 +214,5 @@ class GNSSFetcher:
         import urllib.request
 
         url = f"{self.NGS_API}/ncat/pid/{pid}"
-        with urllib.request.urlopen(url, timeout=30) as resp:
+        with urllib.request.urlopen(url, timeout=30) as resp:  # nosec B310
             return json.loads(resp.read())

@@ -20,16 +20,16 @@ def kml_export(features: list[GeoFeature], path: str) -> Path:
         pm = fastkml_mod.Placemark(
             name=feat.properties.get("name", feat.id or ""),
             description=feat.properties.get("description", ""),
+            geometry=fk_geometry.Geometry(geometry=mapping(feat.geometry)),
         )
-        pm.geometry = feat.geometry
         doc.append(pm)
 
     k.append(doc)
 
     out = Path(path)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(k.to_string().decode("utf-8") if isinstance(k.to_string(), bytes) else k.to_string(),
-                   encoding="utf-8")
+    kml_str = k.to_string()
+    out.write_text(kml_str.decode("utf-8") if isinstance(kml_str, bytes) else kml_str, encoding="utf-8")
     return out
 
 

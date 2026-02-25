@@ -35,6 +35,7 @@ def meters_to_degrees(m: float, latitude: float = 0.0) -> float:
 
 # ── Area conversions ────────────────────────────────────────────────────────
 
+
 def sq_meters_to_acres(sqm: float) -> float:
     return sqm / 4046.8564224
 

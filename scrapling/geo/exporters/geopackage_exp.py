@@ -7,9 +7,7 @@ from pathlib import Path
 from scrapling.geo.models import GeoFeature
 
 
-def geopackage_export(
-    features: list[GeoFeature], path: str, crs: str = "EPSG:4326"
-) -> Path:
+def geopackage_export(features: list[GeoFeature], path: str, crs: str = "EPSG:4326") -> Path:
     """Write features to an OGC GeoPackage file."""
     import geopandas as gpd
 

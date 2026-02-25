@@ -49,9 +49,7 @@ class SentinelSpider(GeoSpider):
             sid=self._session_manager.default_session_id,
         )
 
-    async def parse(
-        self, response: "Response"
-    ) -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
+    async def parse(self, response: "Response") -> AsyncGenerator[Dict[str, Any] | Request | None, None]:
         """Search Sentinel imagery and yield scene metadata."""
         from scrapling.geo.fetchers.satellite import SatelliteFetcher
         from shapely.geometry import shape

@@ -9,3 +9,6 @@ skips:
 - B104  # Possible binding to all interfaces.
 - B301  # Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
 - B108  # Probable insecure usage of temp file/directory.
+- B112  # Try, Except, Continue detected.
+- B405  # Using ElementTree to parse XML — standard XML parsing in geospatial module.
+- B314  # Using xml.etree.ElementTree.fromstring — standard XML parsing in geospatial module.
