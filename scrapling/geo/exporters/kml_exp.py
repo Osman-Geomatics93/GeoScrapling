@@ -10,17 +10,16 @@ from scrapling.geo.models import GeoFeature
 
 def kml_export(features: list[GeoFeature], path: str) -> Path:
     """Write features to a KML file."""
-    from fastkml import kml as fastkml_mod, geometry as fk_geometry
-    from shapely.geometry import mapping
+    from fastkml import KML, Document, Placemark, create_kml_geometry
 
-    k = fastkml_mod.KML()
-    doc = fastkml_mod.Document(name="GeoScrapling Export")
+    k = KML()
+    doc = Document(name="GeoScrapling Export")
 
     for feat in features:
-        pm = fastkml_mod.Placemark(
+        pm = Placemark(
             name=feat.properties.get("name", feat.id or ""),
             description=feat.properties.get("description", ""),
-            geometry=fk_geometry.Geometry(geometry=mapping(feat.geometry)),
+            kml_geometry=create_kml_geometry(feat.geometry),
         )
         doc.append(pm)
 
