@@ -35,11 +35,24 @@ _LAZY_IMPORTS = {
     "BoundingBox": ("scrapling.geo.models", "BoundingBox"),
 }
 __all__ = [
-    "Selector", "Fetcher", "AsyncFetcher", "StealthyFetcher", "DynamicFetcher",
+    "Selector",
+    "Fetcher",
+    "AsyncFetcher",
+    "StealthyFetcher",
+    "DynamicFetcher",
     # Geo exports
-    "GeoSpider", "OGCFetcher", "SatelliteFetcher", "GNSSFetcher",
-    "ElevationFetcher", "CadastralFetcher", "CoordinateExtractor",
-    "CRSManager", "GeoExporter", "GeoPoint", "GeoFeature", "BoundingBox",
+    "GeoSpider",
+    "OGCFetcher",
+    "SatelliteFetcher",
+    "GNSSFetcher",
+    "ElevationFetcher",
+    "CadastralFetcher",
+    "CoordinateExtractor",
+    "CRSManager",
+    "GeoExporter",
+    "GeoPoint",
+    "GeoFeature",
+    "BoundingBox",
 ]
 
 

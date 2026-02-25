@@ -828,6 +828,7 @@ main.add_command(mcp)
 # GeoScrapling commands
 try:
     from scrapling.geo.cli import geo
+
     main.add_command(geo)
 except (ImportError, ModuleNotFoundError):
     pass  # geo dependencies not installed
