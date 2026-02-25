@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from scrapling.geo.models import GeoFeature
 
@@ -54,7 +54,7 @@ class GeoExporter:
             else:
                 transformed.append(f)
 
-        dispatch = {
+        dispatch: dict[str, Callable[..., Path]] = {
             "geojson": self.to_geojson,
             "shapefile": self.to_shapefile,
             "kml": self.to_kml,
